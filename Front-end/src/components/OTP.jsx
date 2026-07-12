@@ -7,15 +7,6 @@ import Button from '../../components/Button.jsx'
 const CODE_LENGTH = 6
 const RESEND_SECONDS = 30
 
-/**
- * OTPVerification — a single reusable 6-digit code screen for two flows:
- *
- *   <OTPVerification flowType="signup" destination="you@company.com" onVerify={fn} onResend={fn} />
- *   <OTPVerification flowType="reset"  destination="you@company.com" onVerify={fn} onResend={fn} />
- *
- * onVerify(code) and onResend() may return a Promise — the component awaits
- * it to drive loading/error state. If omitted, both simulate a network call.
- */
 export default function OTPVerification({
   flowType = 'signup',
   destination,
