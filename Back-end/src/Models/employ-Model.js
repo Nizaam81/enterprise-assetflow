@@ -27,6 +27,13 @@ const employeeSchema = new Schema(
       lowercase: true,
       trim: true,
     },
+    phone: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      match: [/^[0-9]{10}$/, "Please enter a valid 10-digit phone number"],
+    },
 
     password: {
       type: String,
