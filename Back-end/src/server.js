@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 
+import employRoutes from "./routes/Employ-Routes/employ-Routes.js"
 dotenv.config();
 
 const app = express();
@@ -12,9 +13,8 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.send("Hello World from Express Server");
-});
+app.use("/",employRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 
