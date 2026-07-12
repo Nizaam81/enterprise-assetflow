@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Mail, Lock, ShieldCheck } from 'lucide-react'
 import AuthLayout from '../../Layout/AuthLayout.jsx'
-import InputField from '../components/Input.jsx'
-import Button from '../components/Button.jsx'
+import InputField from '../../components/Input.jsx'
+import Button from '../../components/Button.jsx'
 
 export default function Login() {
   const navigate = useNavigate()

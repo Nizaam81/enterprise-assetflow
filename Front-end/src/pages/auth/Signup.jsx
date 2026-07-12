@@ -1,13 +1,19 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { User, Mail, Phone, Lock, Sparkles } from 'lucide-react'
-import AuthLayout from '../components/AuthLayout.jsx'
-import InputField from '../components/Input.jsx'
-import Button from '../components/Button.jsx'
+import AuthLayout from '../../Layout/AuthLayout.jsx'
+import InputField from '../../components/Input.jsx'
+import Button from '../../components/Button.jsx'
 
 export default function Signup() {
   const navigate = useNavigate()
-  const [form, setForm] = useState({ fullName: '', email: '', phone: '', password: '' })
+  const [form, setForm] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',
+  })
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
 
@@ -21,6 +27,9 @@ export default function Signup() {
     if (!form.phone.trim()) next.phone = 'Enter a phone number.'
     if (!form.password) next.password = 'Create a password.'
     else if (form.password.length < 8) next.password = 'Use at least 8 characters.'
+    if (!form.confirmPassword) next.confirmPassword = 'Re-enter your password.'
+    else if (form.password && form.confirmPassword !== form.password)
+      next.confirmPassword = 'Passwords don\u2019t match.'
     setErrors(next)
     return Object.keys(next).length === 0
   }
@@ -100,6 +109,18 @@ export default function Signup() {
           onChange={update('password')}
           error={errors.password}
           hint={!errors.password ? 'Use at least 8 characters.' : undefined}
+        />
+
+        <InputField
+          label="Confirm password"
+          type="password"
+          name="confirmPassword"
+          icon={Lock}
+          placeholder="Re-enter your password"
+          autoComplete="new-password"
+          value={form.confirmPassword}
+          onChange={update('confirmPassword')}
+          error={errors.confirmPassword}
         />
 
         <Button type="submit" loading={loading} className="mt-1">
