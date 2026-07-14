@@ -9,30 +9,43 @@ export default function Button({
   className = '',
   ...rest
 }) {
-  const base =
-    'relative w-full h-12 inline-flex items-center justify-center gap-2 rounded-xl font-semibold text-[15px] tracking-wide transition-all duration-300 active:translate-y-px active:scale-[0.995] disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:translate-y-0'
-
-  const variants = {
-    primary:
-      'bg-gradient-to-br from-emerald-400 to-emerald-600 text-slate-950 shadow-glow-emerald hover:shadow-glow-emerald-lg hover:-translate-y-0.5',
-    secondary:
-      'bg-white/5 border border-white/15 text-white hover:bg-white/[0.08] hover:border-white/25 hover:-translate-y-0.5',
-  }
-
   return (
     <button
       type={type}
       disabled={disabled || loading}
       aria-busy={loading}
-      className={`${base} ${variants[variant]} ${className}`}
+      className={[
+        'relative w-full h-12 inline-flex items-center justify-center gap-2.5 rounded-xl',
+        'text-[14.5px] font-semibold tracking-[-0.01em]',
+        'transition-all duration-200 select-none overflow-hidden',
+        'disabled:opacity-40 disabled:cursor-not-allowed',
+        'active:scale-[0.98]',
+        variant === 'primary'
+          ? 'btn-primary-gradient text-white shadow-btn-violet hover:shadow-btn-violet-hover hover:-translate-y-px'
+          : 'bg-white/[0.04] border border-white/10 text-slate-300 hover:bg-white/[0.07] hover:border-white/16 hover:-translate-y-px',
+        className,
+      ]
+        .filter(Boolean)
+        .join(' ')}
       {...rest}
     >
-      {loading && (
-        <span className="inline-flex animate-spin" aria-hidden="true">
-          <Loader2 size={18} strokeWidth={2.25} />
-        </span>
+      {/* Shimmer sweep on hover (primary only) */}
+      {variant === 'primary' && (
+        <span
+          className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"
+          style={{ transition: 'none' }}
+          aria-hidden="true"
+        />
       )}
-      <span className={loading ? 'opacity-85' : ''}>{children}</span>
+
+      {loading ? (
+        <>
+          <Loader2 size={16} strokeWidth={2.5} className="animate-spin shrink-0" />
+          <span className="opacity-75">{children}</span>
+        </>
+      ) : (
+        children
+      )}
     </button>
   )
 }

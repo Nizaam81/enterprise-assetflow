@@ -5,20 +5,154 @@
 @layer base {
   html {
     color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
   body {
-    @apply bg-surface text-slate-100 antialiased;
+    background-color: #07070e;
+    color: #e2e8f0;
+    font-feature-settings: 'cv01', 'cv02', 'cv03', 'cv04';
   }
+
   ::selection {
-    @apply bg-emerald-500/20 text-slate-100;
+    background-color: rgba(139, 92, 246, 0.3);
+    color: #fff;
   }
+
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 5px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-white/10 rounded-full;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 99px;
   }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+  }
+}
+
+@layer utilities {
+  /* Mesh gradient background */
+  .auth-mesh {
+    background-color: #07070e;
+  }
+
+  /* Animated conic gradient orb */
+  .orb-violet {
+    background: radial-gradient(circle at center, rgba(109, 40, 217, 0.35) 0%, transparent 70%);
+    filter: blur(80px);
+  }
+  .orb-indigo {
+    background: radial-gradient(circle at center, rgba(79, 70, 229, 0.2) 0%, transparent 70%);
+    filter: blur(100px);
+  }
+  .orb-purple {
+    background: radial-gradient(circle at center, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+    filter: blur(90px);
+  }
+
+  /* Input styles */
+  .auth-input {
+    width: 100%;
+    height: 48px;
+    padding: 0 44px 0 44px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    color: #f1f5f9;
+    font-size: 14.5px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: all 0.2s ease;
+  }
+
+  .auth-input::placeholder {
+    color: rgba(148, 163, 184, 0.4);
+  }
+
+  .auth-input:hover:not(:focus) {
+    border-color: rgba(255, 255, 255, 0.13);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .auth-input:focus {
+    border-color: rgba(139, 92, 246, 0.6);
+    background: rgba(139, 92, 246, 0.04);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+  }
+
+  .auth-input.has-error {
+    border-color: rgba(239, 68, 68, 0.5);
+    background: rgba(239, 68, 68, 0.04);
+  }
+
+  .auth-input.has-error:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+  }
+
+  .auth-input.no-left-icon {
+    padding-left: 16px;
+  }
+
+  .auth-input.no-right-icon {
+    padding-right: 16px;
+  }
+
+  /* Divider line */
+  .auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .auth-divider::before,
+  .auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  /* Logo wordmark gradient */
+  .brand-gradient {
+    background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 50%, #6d28d9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* CTA button gradient */
+  .btn-primary-gradient {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 60%, #5b21b6 100%);
+  }
+
+  /* Shimmer loading overlay */
+  .shimmer-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+    animation: shimmer 1.6s ease-in-out infinite;
+  }
+
+  /* Password strength bar transition */
+  .strength-bar {
+    height: 2px;
+    border-radius: 99px;
+    flex: 1;
+    transition: background-color 0.4s ease;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .strength-bar.active-1 { background: #ef4444; }
+  .strength-bar.active-2 { background: #f97316; }
+  .strength-bar.active-3 { background: #eab308; }
+  .strength-bar.active-4 { background: #22c55e; }
 }

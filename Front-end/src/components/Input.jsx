@@ -8,6 +8,7 @@ export default function InputField({
   error,
   hint,
   id,
+  className = '',
   ...rest
 }) {
   const autoId = useId()
@@ -16,54 +17,71 @@ export default function InputField({
   const [revealed, setRevealed] = useState(false)
   const resolvedType = isPassword ? (revealed ? 'text' : 'password') : type
 
+  const hasLeft = !!Icon
+  const hasRight = isPassword
+
   return (
-    <div className="flex flex-col gap-1.5 w-full">
+    <div className={`flex flex-col gap-1.5 ${className}`}>
       {label && (
-        <label htmlFor={inputId} className="text-sm font-medium text-slate-300 tracking-wide">
+        <label
+          htmlFor={inputId}
+          className="text-[13px] font-medium text-slate-400 select-none"
+        >
           {label}
         </label>
       )}
 
-      <div className="relative flex items-center">
+      <div className="relative">
         <input
           id={inputId}
           type={resolvedType}
           aria-invalid={!!error}
-          aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
-          className={`peer w-full h-12 rounded-xl border text-[15px] text-slate-100 placeholder:text-slate-500
-            bg-white/[0.03] transition-all duration-300 outline-none
-            hover:border-white/20
-            focus:bg-white/[0.05] focus:ring-2 focus:ring-emerald-500 focus:border-transparent
-            ${Icon ? 'pl-11' : 'pl-4'} ${isPassword ? 'pr-11' : 'pr-4'}
-            ${error ? 'border-red-400/50 bg-red-500/[0.06] focus:ring-red-400' : 'border-white/10'}
-          `}
+          aria-describedby={
+            error ? `${inputId}-err` : hint ? `${inputId}-hint` : undefined
+          }
+          className={[
+            'auth-input',
+            !hasLeft && 'no-left-icon',
+            !hasRight && 'no-right-icon',
+            error && 'has-error',
+          ]
+            .filter(Boolean)
+            .join(' ')}
           {...rest}
         />
 
+        {/* Left icon */}
         {Icon && (
-          <span className="absolute left-3.5 flex text-slate-500 pointer-events-none peer-focus:text-emerald-400 transition-colors duration-300">
-            <Icon size={17} strokeWidth={1.8} />
+          <span className="pointer-events-none absolute left-0 top-0 h-full w-11 flex items-center justify-center text-slate-600">
+            <Icon size={16} strokeWidth={1.75} />
           </span>
         )}
 
+        {/* Right: password toggle */}
         {isPassword && (
           <button
             type="button"
+            tabIndex={-1}
             onClick={() => setRevealed((v) => !v)}
             aria-label={revealed ? 'Hide password' : 'Show password'}
-            className="absolute right-3 flex items-center justify-center w-7 h-7 rounded-md text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-colors duration-200"
+            className="absolute right-0 top-0 h-full w-11 flex items-center justify-center text-slate-600 hover:text-slate-400 transition-colors duration-150"
           >
-            {revealed ? <EyeOff size={17} strokeWidth={1.8} /> : <Eye size={17} strokeWidth={1.8} />}
+            {revealed ? (
+              <EyeOff size={15} strokeWidth={1.75} />
+            ) : (
+              <Eye size={15} strokeWidth={1.75} />
+            )}
           </button>
         )}
       </div>
 
+      {/* Error or hint text */}
       {error ? (
-        <p id={`${inputId}-error`} role="alert" className="text-xs text-red-400">
+        <p id={`${inputId}-err`} role="alert" className="text-[12px] text-red-400 leading-tight">
           {error}
         </p>
       ) : hint ? (
-        <p id={`${inputId}-hint`} className="text-xs text-slate-500">
+        <p id={`${inputId}-hint`} className="text-[12px] text-slate-600 leading-tight">
           {hint}
         </p>
       ) : null}
