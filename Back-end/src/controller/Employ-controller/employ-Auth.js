@@ -1,8 +1,11 @@
 import Employee from "../../Models/employ-Model.js";
+console.log("Employee model:", Employee);
+import bcrypt from "bcrypt";
 
 const signup = async (req, res) => {
   try {
-    const { fullName, email, phone, password } = req.body;
+      const { fullName, email, phone, password } = req.body;
+      console.log(req.body)
 
     
     if (!fullName || !email || !phone || !password) {
