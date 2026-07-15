@@ -4,6 +4,7 @@ import { User, Mail, Phone, Lock } from 'lucide-react'
 import AuthLayout from '../../Layout/AuthLayout.jsx'
 import InputField from '../../components/Input.jsx'
 import Button from '../../components/Button.jsx'
+import { authService } from '../../services/authService.js'
 
 /* ── Password strength indicator ─────────────────────── */
 function StrengthMeter({ password }) {
@@ -74,15 +75,30 @@ export default function Signup() {
     return Object.keys(next).length === 0
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!validate()) return
     setLoading(true)
-    // Simulated account creation request.
-    setTimeout(() => {
-      setLoading(false)
+    
+    try {
+      await authService.signup({
+        fullName: form.fullName,
+        email: form.email,
+        phone: form.phone,
+        password: form.password
+        // Not sending confirmPassword to the backend
+      })
       navigate('/login')
-    }, 1500)
+    } catch (err) {
+      console.error("Signup failed:", err)
+      // You can implement better error handling/toast notifications here later
+      setErrors((prev) => ({ 
+        ...prev, 
+        email: err.message || 'Registration failed. Please try again.' 
+      }))
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
