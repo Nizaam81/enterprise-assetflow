@@ -4,7 +4,7 @@ import connectDB from "./config/db.js";
 import employRoutes from "./routes/Employ-Routes/employ-Routes.js";
 
 import passport from "./config/passport.js";
-import employRoutes from "./routes/Employ-Routes/employ-Routes.js";
+
 dotenv.config();
 
 const app = express();
