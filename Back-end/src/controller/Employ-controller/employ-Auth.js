@@ -4,10 +4,9 @@ import bcrypt from "bcrypt";
 
 const signup = async (req, res) => {
   try {
-      const { fullName, email, phone, password } = req.body;
-      console.log(req.body)
+    const { fullName, email, phone, password } = req.body;
+    console.log(req.body);
 
-    
     if (!fullName || !email || !phone || !password) {
       return res.status(400).json({
         success: false,
@@ -15,7 +14,6 @@ const signup = async (req, res) => {
       });
     }
 
-    
     const existingEmployee = await Employee.findOne({
       email: email.trim().toLowerCase(),
     });
@@ -27,7 +25,6 @@ const signup = async (req, res) => {
       });
     }
 
-    
     const existingPhone = await Employee.findOne({
       phone: phone.trim(),
     });
@@ -39,10 +36,8 @@ const signup = async (req, res) => {
       });
     }
 
-    
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    
     const employee = await Employee.create({
       fullName: fullName.trim(),
       email: email.trim().toLowerCase(),
@@ -75,5 +70,3 @@ const signup = async (req, res) => {
 };
 
 export { signup };
-
-

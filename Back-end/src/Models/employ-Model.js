@@ -29,15 +29,24 @@ const employeeSchema = new Schema(
     },
     phone: {
       type: String,
-      required: true,
       unique: true,
       trim: true,
+      default: null,
       match: [/^[0-9]{10}$/, "Please enter a valid 10-digit phone number"],
     },
 
     password: {
       type: String,
-      required: true,
+      default: null,
+    },
+    googleID: {
+      type: String,
+      default: null,
+    },
+    provider: {
+      type: String,
+      enum: ["local", "google"],
+      default: "local",
     },
 
     role: {
