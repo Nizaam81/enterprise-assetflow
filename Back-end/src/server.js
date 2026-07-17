@@ -5,9 +5,11 @@ import employRoutes from "./routes/Employ-Routes/employ-Routes.js";
 
 import passport from "./config/passport.js";
 
+import cors from "cors";
 dotenv.config();
 
 const app = express();
+app.use(cors());
 
 connectDB();
 
